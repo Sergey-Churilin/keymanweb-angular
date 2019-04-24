@@ -46,7 +46,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/keymanweb/osk/kmwosk.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true

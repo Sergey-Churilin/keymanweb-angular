@@ -1,21 +1,41 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div style="display: flex; margin-bottom: 10px;" class="hidden-mobile">
+    Button toggle:&nbsp; <div id="KeymanWebControl"></div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- <button (click)="setKeyboards()">Set Keyboards</button> -->
+<div style="margin-bottom: 5px;" *ngFor="let language of glossingLanguages">
+    {{language.englishName}},
+    <small *ngIf="language.vernacularName">{{language.vernacularName}},
+        <span *ngIf="language.vernacularAlternate">,
+            {{language.vernacularAlternate}},</span>
+    </small>
+    {{glosses[language.bcp47]}}
+    <br />
+    <input (click)="setKeyboards()" id="{{language.bcp47}}" [(ngModel)]="glosses[language.bcp47]" placeholder="{{language.bcp47}}"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <!-- <button *ngIf="!language.loaded" (click)="setupInput(language); language.loaded = true">+Keyboard</button> -->
+</div>
 
-<router-outlet></router-outlet>
+
+<button style="margin: 20px 5px 0 0;" (click)="getKeyboards()">List Installed Keyboards</button>
+<div *ngIf="installedKeyboards">
+    <h4>Installed Keyboards</h4>
+    <pre>
+        {{installedKeyboards | json}}
+    </pre>
+</div>
+
+<button style="margin-top: 20px;" *ngIf="!showAvailableKeyboards" (click)="showAvailableKeyboards = true">List Availble Keyboards</button>
+
+<ng-container *ngIf="showAvailableKeyboards">
+    <h4>Availble Keyboards</h4>
+    <table>
+        <tr *ngFor="let keyboard of availableKeyboards.keyboard; let i=index" title="{{keyboard | json}}">
+            <td>{{i+1}} {{keyboard.name}}</td>
+            <td>{{keyboard.id}}</td>
+        </tr>
+    </table>
+    
+    <pre>
+        {{ availableKeyboards | json }}
+    </pre>
+</ng-container>

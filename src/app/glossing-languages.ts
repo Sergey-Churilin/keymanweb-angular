@@ -6,7 +6,7 @@ export interface IGlossLanguage {
     englishName: string;
     vernacularName: string;
     vernacularAlternate: string;
-    loaded?: boolean;
+    // loaded?: boolean;
 }
 
 export const glossingLanguages: IGlossLanguage[] = [

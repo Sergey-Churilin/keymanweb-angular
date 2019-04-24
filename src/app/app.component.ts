@@ -1,9 +1,8 @@
-// tslint:disable: max-line-length
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
 
 import { availableKeyboards } from './available-keyboards';
 
-import { glossingLanguages, IGlossLanguage } from './glossing-languages';
+import { glossingLanguages } from './glossing-languages';
 import '../assets/keymanweb/keymanweb.js';
 import '../assets/keymanweb/kmwuibutton.js';
 declare var keyman: any;
@@ -23,7 +22,7 @@ export class AppComponent implements AfterViewInit {
   glossingLanguages = glossingLanguages;
   glosses = {};
 
-  keyboardsSet = false;
+  // keyboardsSet = false;
   installedKeyboards: any;
 
   constructor(elementRef: ElementRef) {
@@ -50,27 +49,28 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  setupInput(language: IGlossLanguage) {
-    const keyboardCode = language.useKeyboard || language.bcp47;
-    const el = this.elementRef.nativeElement.querySelector(`#${language.bcp47}`);
-    keyman.attachToControl(el);
-    keyman.setKeyboardForControl(el, language.internalName, keyboardCode);
-    setTimeout(() => {
-      el.focus();
-    }, 0);
-  }
 
-  setKeyboards() {
-    if (!this.keyboardsSet) {
+  private setKeyboards() {
+    // if (!this.keyboardsSet) {
       this.glossingLanguages.map(language => {
         const keyboardCode = language.useKeyboard || language.bcp47;
         const el = this.elementRef.nativeElement.querySelector(`#${language.bcp47}`);
         keyman.attachToControl(el);
         keyman.setKeyboardForControl(el, language.internalName, keyboardCode);
-        language.loaded = true;
+        // language.loaded = true;
       });
-    }
+    // }
   }
+
+  // setupInput(language: IGlossLanguage) {
+  //   const keyboardCode = language.useKeyboard || language.bcp47;
+  //   const el = this.elementRef.nativeElement.querySelector(`#${language.bcp47}`);
+  //   keyman.attachToControl(el);
+  //   keyman.setKeyboardForControl(el, language.internalName, keyboardCode);
+  //   setTimeout(() => {
+  //     el.focus();
+  //   }, 0);
+  // }
 
   getKeyboards() {
     this.installedKeyboards = keyman.getKeyboards();
@@ -79,3 +79,4 @@ export class AppComponent implements AfterViewInit {
 }
 
 // keyman.setActiveKeyboard(language.internalName, keyboardCode);
+// tslint:disable: max-line-length
